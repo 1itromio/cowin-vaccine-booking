@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="center"
+            type="dev.romio.cowinvaccinebook.data.model.Center" />
+    </data>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_schedule_appointment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_booking_at"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/booking_at"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/center_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/center_id"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_booking_at"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/center_id_val"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{Integer.toString(center.centerId)}"
+                app:layout_constraintTop_toBottomOf="@id/tv_booking_at"
+                app:layout_constraintStart_toEndOf="@id/center_id"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/center_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/center_id"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/center_name_val"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{center.name}"
+                app:layout_constraintTop_toBottomOf="@id/center_id"
+                app:layout_constraintStart_toEndOf="@id/center_name"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/center_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/address"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/center_name"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/center_address_val"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{center.address}"
+                app:layout_constraintTop_toBottomOf="@id/center_name"
+                app:layout_constraintStart_toEndOf="@id/center_address"/>
+
+            <FrameLayout
+                android:id="@+id/fl_captcha"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                app:layout_constraintTop_toBottomOf="@id/center_address_val">
+                <WebView
+                    android:id="@+id/wv_captcha"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:visibility="invisible"/>
+                <ProgressBar
+                    android:id="@+id/pb_captcha_loading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"/>
+            </FrameLayout>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_captcha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/fl_captcha"
+                android:hint="@string/enter_captcha"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_schedule_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/et_captcha"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_schedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_schedule_status"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/schedule_appointment"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/btn_schedule"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/cancel"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/btn_schedule"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/next"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+
+</layout>

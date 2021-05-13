@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewmodel"
+            type="dev.romio.cowinvaccinebook.data.model.BeneficiarySummary" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/cb_beneficiary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewmodel.appointmentCount > 0 ? View.INVISIBLE : View.VISIBLE}"
+            android:checked="@{viewmodel.isChecked()}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_bref_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_bref_id"
+            app:layout_constraintStart_toEndOf="@id/cb_beneficiary"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_bref_id_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewmodel.brId}"
+            app:layout_constraintStart_toEndOf="@id/tv_bref_id"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/name"
+            app:layout_constraintStart_toEndOf="@id/cb_beneficiary"
+            app:layout_constraintTop_toBottomOf="@id/tv_bref_id" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_name_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewmodel.name}"
+            app:layout_constraintStart_toEndOf="@id/tv_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_bref_id" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_vaccine_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/vaccine_status"
+            app:layout_constraintStart_toEndOf="@id/cb_beneficiary"
+            app:layout_constraintTop_toBottomOf="@id/tv_name_value" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_vaccine_status_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewmodel.vaccinationStatus}"
+            app:layout_constraintStart_toEndOf="@id/tv_vaccine_status"
+            app:layout_constraintTop_toBottomOf="@id/tv_name_value" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_vaccine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/vaccine"
+            app:layout_constraintStart_toEndOf="@id/cb_beneficiary"
+            app:layout_constraintTop_toBottomOf="@id/tv_vaccine_status" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_vaccine_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewmodel.vaccine}"
+            app:layout_constraintStart_toEndOf="@id/tv_vaccine"
+            app:layout_constraintTop_toBottomOf="@id/tv_vaccine_status" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

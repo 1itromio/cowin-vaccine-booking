@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="dev.romio.cowinvaccinebook.view.fragment.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_userDetailsEntryFragment"
+            app:destination="@id/userDetailsEntryFragment" />
+        <action
+            android:id="@+id/action_splashFragment_to_beneficiaryDetailsFragment"
+            app:destination="@id/beneficiaryDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userDetailsEntryFragment"
+        android:name="dev.romio.cowinvaccinebook.view.fragment.UserDetailsEntryFragment"
+        android:label="fragment_user_details_entry"
+        tools:layout="@layout/fragment_user_details_entry" >
+        <action
+            android:id="@+id/action_userDetailsEntryFragment_to_beneficiaryDetailsFragment"
+            app:destination="@id/beneficiaryDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/beneficiaryDetailsFragment"
+        android:name="dev.romio.cowinvaccinebook.view.fragment.BeneficiaryDetailsFragment"
+        android:label="BeneficiaryDetailsFragment" />
+</navigation>
