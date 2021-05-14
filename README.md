@@ -6,6 +6,7 @@
 * This App will try to book the first available slot for a Vaccine Center
 * Add beneficiaries to the account from [here](https://www.cowin.gov.in) before using this app. Currently this app does not support adding beneficiaries.
 * You have download the Appointment PDF from [here](https://www.cowin.gov.in) after an appointment is booked.
+* Currently this app supports booking the First Dose of vaccine only. Second dose support coming soon.
 
 ## Usage Guide
 1. Make sure to provide Read SMS Permission.
@@ -28,6 +29,15 @@ Download the APK from
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+## TODO
+* Allow adding beneficiaries if beneficiaries not available
+* Allow downloading appointments for appointment scheduled users
+* Code cleanup and comment
+* Write Test cases
+* Optimise View Hierarchy
+* Handle token expiry case while booking appointment
+* Handle booking 2nd Dose
 
 
 ## License
