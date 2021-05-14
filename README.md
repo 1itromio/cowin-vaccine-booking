@@ -15,9 +15,14 @@
 
 ## Installation
 
-Download the APK from
+Download the APK from 
 
 ## Screenshots
+
+![Alt text](screenshots/Screenshot_20210514-131656.jpg?raw=true "Enter Phone Number Screen")
+![Alt text](/screenshots/Screenshot_20210514-131845.jpg?raw=true "User Vaccine Booking Preference Screen")
+![Alt text](/screenshots/Screenshot_20210514-131931.jpg?raw=true "Vaccine Booking Service Running")
+![Alt text](/screenshots/Screenshot_20210514-132623.jpg?raw=true "Enter Captcha to Book Screen")
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
