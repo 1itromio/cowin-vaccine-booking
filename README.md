@@ -5,7 +5,7 @@
 * I am not responsible for any legalities involved while using this app. Use at your own risk
 * This App will try to book the first available slot for a Vaccine Center
 * Add beneficiaries to the account from [here](https://www.cowin.gov.in) before using this app. Currently this app does not support adding beneficiaries.
-* You have download the Appointment PDF from [here](https://www.cowin.gov.in) after an appointment is booked.
+* You have to download the Appointment PDF from [here](https://www.cowin.gov.in) after an appointment is booked.
 * Currently this app supports booking the First Dose of vaccine only. Second dose support coming soon.
 
 ## Usage Guide
@@ -18,7 +18,7 @@
 
 ## Installation
 
-Download the APK from 
+Download the APK from [here](https://github.com/1itromio/cowin-vaccine-booking/releases/download/v1.0.0/app-release.apk)
 
 ## Screenshots
 
