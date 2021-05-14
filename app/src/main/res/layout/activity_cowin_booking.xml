@@ -11,11 +11,14 @@
             type="dev.romio.cowinvaccinebook.data.model.Session" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_schedule_appointment"
-        android:padding="@dimen/padding_default"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_schedule_appointment"
+            android:padding="@dimen/padding_default"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_total_centers"
@@ -164,13 +167,13 @@
             <FrameLayout
                 android:id="@+id/fl_captcha"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="80dp"
                 android:layout_marginTop="@dimen/margin_small"
                 app:layout_constraintTop_toBottomOf="@id/rg_slots">
                 <WebView
                     android:id="@+id/wv_captcha"
                     android:layout_width="match_parent"
-                    android:layout_height="120dp"
+                    android:layout_height="80dp"
                     android:visibility="invisible"/>
                 <ProgressBar
                     android:id="@+id/pb_captcha_loading"
@@ -257,6 +260,7 @@
                 android:text="@string/cancel"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 
 
