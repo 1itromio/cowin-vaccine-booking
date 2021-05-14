@@ -1,9 +1,8 @@
 # CoWIN Vaccine Booking App
 
 ## Warning
-* This is NOT the official CoWIN App and I DO NOT guarantee the scheduling of vaccine appointment through this App. This a hobby showcase project.
+* This is NOT the official CoWIN App and I DO NOT guarantee the scheduling of vaccine appointment through this App. This is a hobby showcase project.
 * I am not responsible for any legalities involved while using this app. Use at your own risk
-* This App will try to book the first available slot for a Vaccine Center
 * Add beneficiaries to the account from [here](https://www.cowin.gov.in) before using this app. Currently this app does not support adding beneficiaries.
 * You have to download the Appointment PDF from [here](https://www.cowin.gov.in) after an appointment is booked.
 * Currently this app supports booking the First Dose of vaccine only. Second dose support coming soon.
@@ -25,7 +24,7 @@ Download the APK from [here](https://github.com/1itromio/cowin-vaccine-booking/r
 ![](/screenshots/Screenshot_20210514-131656.jpg?raw=true "Enter Phone Number Screen")
 ![](/screenshots/Screenshot_20210514-131845.jpg?raw=true "User Vaccine Booking Preference Screen")
 ![](/screenshots/Screenshot_20210514-131931.jpg?raw=true "Vaccine Booking Service Running")
-![](/screenshots/Screenshot_20210514-132623.jpg?raw=true "Enter Captcha to Book Screen")
+![](/screenshots/Screenshot_20210514-232449.jpg?raw=true "Enter Captcha to Book Screen")
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
