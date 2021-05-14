@@ -7,9 +7,11 @@
 /.idea/workspace.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
+/.idea/sonarlint/
 .DS_Store
 /build
 /captures
 .externalNativeBuild
 .cxx
+app/release/
 local.properties
