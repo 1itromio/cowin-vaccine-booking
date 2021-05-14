@@ -10,14 +10,12 @@ import android.os.*
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.widget.doOnTextChanged
-import coil.load
 import dagger.hilt.android.AndroidEntryPoint
 import dev.romio.cowinvaccinebook.R
 import dev.romio.cowinvaccinebook.databinding.ActivityCowinBookingBinding
 import dev.romio.cowinvaccinebook.service.CowinBookingService
 import dev.romio.cowinvaccinebook.util.gone
 import dev.romio.cowinvaccinebook.util.invisible
-import dev.romio.cowinvaccinebook.util.loadSvg
 import dev.romio.cowinvaccinebook.util.visible
 import dev.romio.cowinvaccinebook.viewmodel.CowinBookingActivityViewModel
 import timber.log.Timber
@@ -98,6 +96,9 @@ class CowinBookingActivity: BaseActivity<CowinBookingActivityViewModel>() {
         viewModel.currCenter.observe(this) {
             binding.etCaptcha.setText("")
             binding.center = it
+            binding.tvTotalCenters.text =
+                getString(R.string.total_available_centers).
+                format((viewModel.centers?.size ?: 0).toString())
             binding.executePendingBindings()
         }
         viewModel.currCaptcha.observe(this) {

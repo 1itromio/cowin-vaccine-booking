@@ -24,6 +24,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 import timber.log.Timber
 import java.util.*
+import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -55,8 +56,6 @@ class CowinBookingService: Service() {
     @Inject
     lateinit var generateOTPUseCase: GenerateOTPUseCase
 
-    private var currTryCount = 0
-
     private var userPreference: UserPreference? = null
     private var otpTimer: CountDownTimer? = null
 
@@ -64,6 +63,10 @@ class CowinBookingService: Service() {
     private val serviceScope = CoroutineScope(Dispatchers.Main + serviceJob)
 
     private val publishableMessages = LinkedList<String>()
+
+    private val lookingForVaccine = AtomicBoolean(false)
+
+    //private var tryCount = 0
 
     private val notificationBuilder by lazy {
         NotificationCompat.Builder(this, CHANNEL_ID)
@@ -133,6 +136,7 @@ class CowinBookingService: Service() {
 
     private fun start() {
         serviceScope.launch {
+            lookingForVaccine.compareAndSet(false, true)
             publishStatus("Starting Looking for vaccines")
             userPreference = cowinAppRepository.getUserPreference()
             if(userPreference == null) {
@@ -166,6 +170,7 @@ class CowinBookingService: Service() {
                 if(filteredCentersPair.first.isNotEmpty()) {
                     isVaccineAvailable = true
                     publishStatus("Vaccines Available, Initiating Schedule Appointment", true)
+                    lookingForVaccine.compareAndSet(true, false)
                     initiateBooking(filteredCentersPair.first, filteredCentersPair.second)
                 } else {
                     publishStatus("No vaccines available. Waiting for ${refreshInterval/1000} secs", true)
@@ -201,7 +206,9 @@ class CowinBookingService: Service() {
                 is ApiResult.Success -> {
                     delay(100)
                     publishStatus("Successfully Generated bearer token", true)
-                    checkVaccineAvailability()
+                    if(lookingForVaccine.get()) {
+                        checkVaccineAvailability()
+                    }
                 }
                 is ApiResult.NetworkError -> {
                     publishStatus("Failed to generate bearer token, Retrying after 3Sec", true)
@@ -231,6 +238,7 @@ class CowinBookingService: Service() {
     fun restartLooking() {
         Timber.d("Restart booking called")
         serviceScope.launch {
+            lookingForVaccine.compareAndSet(false, true)
             checkVaccineAvailability()
         }
     }
@@ -239,13 +247,14 @@ class CowinBookingService: Service() {
         centers: List<Center>?,
         beneficiaries: List<BeneficiarySummary>
     ): Pair<List<Center>, Map<Int, List<Session>>> {
-        currTryCount += 1
+        //tryCount++
         val centerIdToAvailableSessionMap = hashMapOf<Int, List<Session>>()
         val filteredCenters = centers?.filter { center ->
-            if(currTryCount == 5){
-                centerIdToAvailableSessionMap[center.centerId] = center.sessions ?: listOf()
+            // Uncomment for Testing
+            /*if(tryCount > 5) {
+                centerIdToAvailableSessionMap[center.centerId] = center.sessions ?: arrayListOf()
                 return@filter true
-            }
+            }*/
             val filteredSessions = center.sessions?.filter { session ->
                 (session.availableCapacity ?: 0) >= beneficiaries.size &&
                         session.minAgeLimit == userPreference?.ageGroup?.age &&
@@ -271,7 +280,7 @@ class CowinBookingService: Service() {
             publishableMessages.add("${System.currentTimeMillis()/1000}: $message")
             notificationBuilder.setContentText(message)
             notificationBuilder.setStyle(NotificationCompat.InboxStyle().let { style ->
-                publishableMessages.forEach {
+                publishableMessages.reversed().forEach {
                     style.addLine(it)
                 }
                 style

@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">CoWin Vaccine Book</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="app_name">CoWin Vaccine Booking</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="enter_your_mobile_number">Enter your mobile number</string>
     <string name="submit">Submit</string>
@@ -33,7 +32,7 @@
     <string name="start_booking">Start Looking For Vaccines</string>
     <string name="stop_booking">Stop Looking For Vaccines</string>
     <string name="looking_for">Looking For</string>
-    <string name="eighteen_plus">18-45</string>
+    <string name="eighteen_plus">18–45</string>
     <string name="fourty_five_plus">45+</string>
     <string name="select_at_least_one">Please select at least one beneficiary</string>
     <string name="age_issue">Selected Beneficiary do not fall under age group</string>
@@ -57,4 +56,18 @@
     <string name="getting_inavlid_captcha">Getting Invalid Captcha</string>
     <string name="trying_to_schedule">Trying to Schedule Appointment</string>
     <string name="fetching_captcha">Fetching Captcha</string>
+    <string name="proceed">Proceed</string>
+    <string name="warning">
+        &#8226; Use at your own risk
+        \n\n&#8226; This is a hobby project, so the developer is not responsible for any concerned legalities
+        \n\n&#8226; Make sure to provide Read SMS Permission
+        \n\n&#8226; Make sure to provide draw over apps permission.
+        \n\n&#8226; For some devices like MI, Oppo, Vivo provide Go to App -> Permission -> Provide All Permissions
+        \n\n&#8226; Try Booking from Mobile Data to avoid 301
+        \n\n&#8226; If something does not work Go to App Settings click on Stop and then click on clear data as the app is not fully stable yet
+        \n\n&#8226; Make sure your alarm sound is on high volume so that u get alert to enter captcha for Booking Appointment
+    </string>
+    <string name="age_group">Age Group:</string>
+    <string name="total_available_centers">Total available centers: %s</string>
+    <string name="next_center">Next Center</string>
 </resources>

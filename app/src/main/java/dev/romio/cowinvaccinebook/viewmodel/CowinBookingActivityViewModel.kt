@@ -18,12 +18,7 @@ import dev.romio.cowinvaccinebook.usecase.model.ScheduleAppointmentRequest
 import dev.romio.cowinvaccinebook.util.ResourceProvider
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.apache.commons.text.StringEscapeUtils
 import timber.log.Timber
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.OutputStreamWriter
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,14 +27,12 @@ class CowinBookingActivityViewModel @Inject constructor(
     private val scheduleAppointmentUseCase: ScheduleAppointmentUseCase,
     private val cowinAppRepository: CowinAppRepository,
     private val resourceProvider: ResourceProvider,
-    private val application: Application
 ): BaseViewModel() {
 
-    // TODO(Make Alert Sounds)
-    //TODO(TAKE PERSMISSION FOR SYSTEM ALERT)
     // TODO Retry captchas
 
-    private var centers: List<Center>? = null
+    var centers: List<Center>? = null
+        private set
     private var centerIdToSessionsMap: Map<Int, List<Session>>? = null
     private var currCenterCount = 0
 
@@ -141,7 +134,11 @@ class CowinBookingActivityViewModel @Inject constructor(
                     }
                     is ApiResult.GenericError -> {
                         Timber.d("Error happened: %d,%s, %s", scheduleAppointmentResp.code, scheduleAppointmentResp.error.error, scheduleAppointmentResp.error.errorCode)
-                        _appointmentScheduleFailed.postValue(scheduleAppointmentResp.error.error)
+                        if(scheduleAppointmentResp.code == 401) {
+                            _finishBooking.postValue(true)
+                        } else {
+                            _appointmentScheduleFailed.postValue(scheduleAppointmentResp.error.error)
+                        }
                     }
                 }
             } else{
@@ -161,8 +158,6 @@ class CowinBookingActivityViewModel @Inject constructor(
             tryCount += 1
             when(captchaResp) {
                 is ApiResult.Success -> {
-
-                    //val captchaString = StringEscapeUtils.unescapeXml(captchaResp.value.captcha.replace("\\", ""))
                     Timber.d(captchaResp.value.captcha)
                     return captchaResp.value.captcha
                 }
@@ -186,26 +181,4 @@ class CowinBookingActivityViewModel @Inject constructor(
     }
 
     private fun getHTMLBody(svgString: String) = "<html><body><img src=\"data:image/svg+xml;base64,$svgString\" /></body></html>"
-
-    /*private fun writeToFile(data: String): String? {
-        val folder = File(application.externalCacheDir, "/captchas/")
-        if (!folder.exists()) {
-            if (!folder.mkdir()) {
-                Timber.d("Cannot create a directory!")
-            } else {
-                folder.mkdirs();
-            }
-        }
-        val file = File(folder, "${System.currentTimeMillis()}.svg")
-        return try {
-            val outputStream = FileOutputStream(java.lang.String.valueOf(file))
-            val outputStreamWriter = OutputStreamWriter(outputStream)
-            outputStreamWriter.write(data)
-            outputStreamWriter.close()
-            file.path
-        } catch (e: IOException) {
-            Timber.e(e)
-            null
-        }
-    }*/
 }

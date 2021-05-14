@@ -94,6 +94,14 @@ class BeneficiaryDetailsViewModel @Inject constructor(
     fun fetchUserPreference(isServiceRunning: Boolean) {
         viewModelScope.launch {
             val preference = cowinAppRepository.getUserPreference()
+            if(preference?.stateId != null) {
+                val districtApiResp = getDistrictsForStateUseCase.execute(preference.stateId)
+                if (districtApiResp is ApiResult.Success) {
+                    val districts = districtApiResp.value.districts ?: arrayListOf()
+                    _districts.postValue(districts)
+                    _showDistrictsLoader.postValue(false)
+                }
+            }
             _enableView.postValue(Pair(!isServiceRunning, preference))
         }
     }

@@ -229,6 +229,13 @@ class BeneficiaryDetailsFragment:
         binding.rbFourtyFivePlus.isEnabled = enable
 
         beneficiariesAdapter.enableChecking(enable)
+        viewModel.onStates.value?.indexOfFirst { it.stateId == userPreference.stateId }?.let {
+            binding.acsStates.setSelection(it)
+        }
+        viewModel.onDistricts.value?.indexOfFirst { it.districtId == userPreference.districtId }?.let {
+            binding.acsDistricts.setSelection(it)
+        }
+
     }
 
 

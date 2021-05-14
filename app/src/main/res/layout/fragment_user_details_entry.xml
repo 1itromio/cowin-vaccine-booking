@@ -7,27 +7,51 @@
         android:layout_height="match_parent"
         tools:context=".view.fragment.UserDetailsEntryFragment">
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.1" />
+
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/et_mobile_number"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/size_44"
             android:maxLength="@integer/max_mobile_number_len"
             android:enabled="true"
             android:inputType="number"
             android:maxLines="1"
+            android:paddingStart="@dimen/padding_default"
+            android:paddingEnd="@dimen/padding_default"
+            android:background="@drawable/shape_et"
             android:hint="@string/enter_your_mobile_number"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="@id/gl_start"
+            android:layout_margin="@dimen/margin_large"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_submit_phone_num"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/submit"
+            android:layout_height="@dimen/size_44"
+            android:text="@string/proceed"
             android:enabled="false"
             android:inputType="number"
+            android:textSize="@dimen/text_large"
+            android:paddingStart="@dimen/padding_large"
+            android:paddingEnd="@dimen/padding_large"
+            android:layout_marginTop="@dimen/margin_large"
+            android:background="@drawable/shape_btn"
+            android:textColor="@color/white"
             app:layout_constraintTop_toBottomOf="@id/et_mobile_number"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_large"
+            android:text="@string/warning"
+            app:layout_constraintTop_toBottomOf="@id/btn_submit_phone_num" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

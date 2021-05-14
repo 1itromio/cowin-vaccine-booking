@@ -12,10 +12,14 @@
         tools:layout="@layout/fragment_splash" >
         <action
             android:id="@+id/action_splashFragment_to_userDetailsEntryFragment"
-            app:destination="@id/userDetailsEntryFragment" />
+            app:destination="@id/userDetailsEntryFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_splashFragment_to_beneficiaryDetailsFragment"
-            app:destination="@id/beneficiaryDetailsFragment" />
+            app:destination="@id/beneficiaryDetailsFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/userDetailsEntryFragment"
@@ -24,7 +28,9 @@
         tools:layout="@layout/fragment_user_details_entry" >
         <action
             android:id="@+id/action_userDetailsEntryFragment_to_beneficiaryDetailsFragment"
-            app:destination="@id/beneficiaryDetailsFragment" />
+            app:destination="@id/beneficiaryDetailsFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/beneficiaryDetailsFragment"

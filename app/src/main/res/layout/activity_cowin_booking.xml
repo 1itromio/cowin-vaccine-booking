@@ -7,20 +7,29 @@
             name="center"
             type="dev.romio.cowinvaccinebook.data.model.Center" />
     </data>
-    <FrameLayout
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_schedule_appointment"
+        android:padding="@dimen/padding_default"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_schedule_appointment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_total_centers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_booking_at"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/margin_small"
                 android:text="@string/booking_at"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_total_centers"
                 app:layout_constraintStart_toStartOf="parent"/>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -28,6 +37,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/center_id"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/margin_default"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_booking_at"/>
 
@@ -36,7 +47,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{Integer.toString(center.centerId)}"
-                app:layout_constraintTop_toBottomOf="@id/tv_booking_at"
+                android:layout_marginStart="@dimen/margin_small"
+                app:layout_constraintTop_toTopOf="@id/center_id"
                 app:layout_constraintStart_toEndOf="@id/center_id"/>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -44,6 +56,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/name"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/margin_small"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/center_id"/>
 
@@ -52,7 +66,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{center.name}"
-                app:layout_constraintTop_toBottomOf="@id/center_id"
+                android:layout_marginStart="@dimen/margin_small"
+                app:layout_constraintTop_toTopOf="@id/center_name"
                 app:layout_constraintStart_toEndOf="@id/center_name"/>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -60,6 +75,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/address"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/margin_small"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/center_name"/>
 
@@ -68,18 +85,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{center.address}"
-                app:layout_constraintTop_toBottomOf="@id/center_name"
+                app:layout_constraintTop_toTopOf="@id/center_address"
                 app:layout_constraintStart_toEndOf="@id/center_address"/>
 
             <FrameLayout
                 android:id="@+id/fl_captcha"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="120dp"
+                android:layout_marginTop="@dimen/padding_large"
                 app:layout_constraintTop_toBottomOf="@id/center_address_val">
                 <WebView
                     android:id="@+id/wv_captcha"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_height="120dp"
                     android:visibility="invisible"/>
                 <ProgressBar
                     android:id="@+id/pb_captcha_loading"
@@ -91,7 +109,12 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/et_captcha"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/size_44"
+                android:background="@drawable/shape_et"
+                android:paddingStart="@dimen/padding_large"
+                android:paddingEnd="@dimen/padding_large"
+                android:maxLines="1"
+                android:layout_marginTop="@dimen/margin_default"
                 app:layout_constraintTop_toBottomOf="@id/fl_captcha"
                 android:hint="@string/enter_captcha"/>
 
@@ -99,15 +122,21 @@
                 android:id="@+id/tv_schedule_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_default"
                 app:layout_constraintTop_toBottomOf="@id/et_captcha"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_schedule"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_default"
                 app:layout_constraintTop_toBottomOf="@id/tv_schedule_status"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/shape_btn"
+                android:textColor="@color/white"
+                android:paddingStart="@dimen/padding_large"
+                android:paddingEnd="@dimen/padding_large"
                 android:text="@string/schedule_appointment"/>
 
             <androidx.appcompat.widget.AppCompatButton
@@ -116,6 +145,11 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/btn_schedule"
                 app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/shape_btn"
+                android:textColor="@color/white"
+                android:layout_marginTop="@dimen/margin_default"
+                android:paddingStart="@dimen/padding_large"
+                android:paddingEnd="@dimen/padding_large"
                 android:text="@string/cancel"/>
 
             <androidx.appcompat.widget.AppCompatButton
@@ -124,12 +158,15 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/btn_schedule"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:text="@string/next"/>
+                android:background="@drawable/shape_btn"
+                android:textColor="@color/white"
+                android:layout_marginTop="@dimen/margin_default"
+                android:paddingStart="@dimen/padding_large"
+                android:paddingEnd="@dimen/padding_large"
+                android:text="@string/next_center"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </FrameLayout>
+
+
 
 </layout>

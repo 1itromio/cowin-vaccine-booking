@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_xx_large">28sp</dimen>
+    <dimen name="et_corner">22dp</dimen>
+    <dimen name="size_44">44dp</dimen>
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="padding_default">16dp</dimen>
+    <dimen name="padding_large">20dp</dimen>
+    <dimen name="margin_large">24dp</dimen>
+    <dimen name="text_large">18sp</dimen>
+    <dimen name="btn_corner">22dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="card_default_radius">16dp</dimen>
+    <dimen name="margin_x_small">4dp</dimen>
+    <dimen name="margin_default">16dp</dimen>
+    <dimen name="size_100">100dp</dimen>
+</resources>
