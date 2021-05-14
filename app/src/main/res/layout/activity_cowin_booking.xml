@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
             name="center"
             type="dev.romio.cowinvaccinebook.data.model.Center" />
+        <variable
+            name="session"
+            type="dev.romio.cowinvaccinebook.data.model.Session" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,7 +30,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:layout_marginTop="@dimen/margin_small"
                 android:text="@string/booking_at"
                 app:layout_constraintTop_toBottomOf="@id/tv_total_centers"
                 app:layout_constraintStart_toStartOf="parent"/>
@@ -38,7 +40,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/center_id"
                 android:textStyle="bold"
-                android:layout_marginTop="@dimen/margin_default"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_booking_at"/>
 
@@ -57,7 +58,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/name"
                 android:textStyle="bold"
-                android:layout_marginTop="@dimen/margin_small"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/center_id"/>
 
@@ -76,7 +76,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/address"
                 android:textStyle="bold"
-                android:layout_marginTop="@dimen/margin_small"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/center_name"/>
 
@@ -88,12 +87,86 @@
                 app:layout_constraintTop_toTopOf="@id/center_address"
                 app:layout_constraintStart_toEndOf="@id/center_address"/>
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_session"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/session"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/margin_small"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/center_address"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/date"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_session"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_date_val"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{session.date}"
+                tools:text="16-06-2021"
+                app:layout_constraintTop_toTopOf="@id/tv_date"
+                app:layout_constraintStart_toEndOf="@id/tv_date"/>
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_available_capacity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/available_capacity"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_date"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_available_capacity_val"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{Integer.toString(session.availableCapacity)}"
+                tools:text="100"
+                app:layout_constraintTop_toTopOf="@id/tv_available_capacity"
+                app:layout_constraintStart_toEndOf="@id/tv_available_capacity"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_vaccine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/vaccine"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_available_capacity"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_vaccine_val"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{session.vaccine}"
+                tools:text="COVAXIN"
+                app:layout_constraintTop_toTopOf="@id/tv_vaccine"
+                app:layout_constraintStart_toEndOf="@id/tv_vaccine"/>
+
+            <RadioGroup
+                android:id="@+id/rg_slots"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_vaccine"
+                app:layout_constraintStart_toStartOf="parent">
+
+            </RadioGroup>
+
             <FrameLayout
                 android:id="@+id/fl_captcha"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
-                android:layout_marginTop="@dimen/padding_large"
-                app:layout_constraintTop_toBottomOf="@id/center_address_val">
+                android:layout_marginTop="@dimen/margin_small"
+                app:layout_constraintTop_toBottomOf="@id/rg_slots">
                 <WebView
                     android:id="@+id/wv_captcha"
                     android:layout_width="match_parent"
@@ -114,7 +187,10 @@
                 android:paddingStart="@dimen/padding_large"
                 android:paddingEnd="@dimen/padding_large"
                 android:maxLines="1"
-                android:layout_marginTop="@dimen/margin_default"
+                android:lines="1"
+                android:singleLine="true"
+                android:imeOptions="actionDone"
+                android:layout_marginTop="@dimen/margin_small"
                 app:layout_constraintTop_toBottomOf="@id/fl_captcha"
                 android:hint="@string/enter_captcha"/>
 
@@ -122,14 +198,14 @@
                 android:id="@+id/tv_schedule_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_default"
+                android:layout_marginTop="@dimen/margin_small"
                 app:layout_constraintTop_toBottomOf="@id/et_captcha"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_schedule"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_default"
+                android:layout_marginTop="@dimen/margin_small"
                 app:layout_constraintTop_toBottomOf="@id/tv_schedule_status"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -139,21 +215,9 @@
                 android:paddingEnd="@dimen/padding_large"
                 android:text="@string/schedule_appointment"/>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/btn_schedule"
-                app:layout_constraintStart_toStartOf="parent"
-                android:background="@drawable/shape_btn"
-                android:textColor="@color/white"
-                android:layout_marginTop="@dimen/margin_default"
-                android:paddingStart="@dimen/padding_large"
-                android:paddingEnd="@dimen/padding_large"
-                android:text="@string/cancel"/>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_next"
+                android:id="@+id/btn_next_session"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/btn_schedule"
@@ -163,7 +227,34 @@
                 android:layout_marginTop="@dimen/margin_default"
                 android:paddingStart="@dimen/padding_large"
                 android:paddingEnd="@dimen/padding_large"
+                android:text="@string/next_session"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_next_center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/btn_next_session"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/shape_btn"
+                android:textColor="@color/white"
+                android:layout_marginTop="@dimen/margin_default"
+                android:paddingStart="@dimen/padding_large"
+                android:paddingEnd="@dimen/padding_large"
                 android:text="@string/next_center"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/btn_next_session"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/btn_next_center"
+                android:background="@drawable/shape_btn"
+                android:textColor="@color/white"
+                android:layout_marginTop="@dimen/margin_default"
+                android:paddingStart="@dimen/padding_large"
+                android:paddingEnd="@dimen/padding_large"
+                android:text="@string/cancel"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

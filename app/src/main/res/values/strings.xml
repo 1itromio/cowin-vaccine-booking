@@ -70,4 +70,10 @@
     <string name="age_group">Age Group:</string>
     <string name="total_available_centers">Total available centers: %s</string>
     <string name="next_center">Next Center</string>
+    <string name="session">Session:</string>
+    <string name="date">Date:</string>
+    <string name="available_capacity">Available Capacity:</string>
+    <string name="previous_session">Previous Session</string>
+    <string name="previous_center">Previous Center</string>
+    <string name="next_session">Next Session</string>
 </resources>

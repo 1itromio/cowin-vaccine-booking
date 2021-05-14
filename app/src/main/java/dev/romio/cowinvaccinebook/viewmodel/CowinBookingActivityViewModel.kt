@@ -31,13 +31,19 @@ class CowinBookingActivityViewModel @Inject constructor(
 
     // TODO Retry captchas
 
+    private val captchaLineReplaceRegex by lazy {
+        "(<path d=)(.*?)(fill=\"none\"/>)".toRegex()
+    }
+
     var centers: List<Center>? = null
         private set
     private var centerIdToSessionsMap: Map<Int, List<Session>>? = null
+
     private var currCenterCount = 0
+    private var currSessionCountForCenter = 0
 
     private val _currCenter = MutableLiveData<Center>()
-    private val _currSessions = MutableLiveData<List<Session>>()
+    private val _currSession = MutableLiveData<Session>()
     private val _currCaptcha = MutableLiveData<String>()
     private val _appointmentScheduleSuccess = MutableLiveData<String>()
     private val _appointmentScheduleFailed = MutableLiveData<String>()
@@ -46,13 +52,16 @@ class CowinBookingActivityViewModel @Inject constructor(
     private val _scheduleAppointment = MutableLiveData<Boolean>()
 
     val currCenter: LiveData<Center> = _currCenter
-    val currSessions: LiveData<List<Session>> = _currSessions
+    val currSession: LiveData<Session> = _currSession
     val currCaptcha: LiveData<String> = _currCaptcha
     val onAppointmentScheduleSuccess: LiveData<String> = _appointmentScheduleSuccess
     val onAppointmentScheduleFailed: LiveData<String> = _appointmentScheduleFailed
     val finishBooking: LiveData<Boolean> = _finishBooking
     val onFetchingCaptcha: LiveData<Boolean> = _fetchingCaptcha
     val onScheduleAppointment: LiveData<Boolean> = _scheduleAppointment
+
+    //private var currSelectedSession: Session? = null
+    //private var currSelectedCenter: Center? = null
 
     var beneficiaries: List<BeneficiarySummary>? = null
 
@@ -62,16 +71,28 @@ class CowinBookingActivityViewModel @Inject constructor(
     ) {
         this.centers = centers
         this.centerIdToSessionsMap = centerIdToSessionsMap
+        viewModelScope.launch {
+            fetchCaptcha()
+        }
         book()
     }
 
     fun book() {
-        if(centers?.size?: 0 > currCenterCount) {
-            val currCenter = centers?.get(currCenterCount)
-            val currSessions = centerIdToSessionsMap?.get(currCenter?.centerId)
+        if((centers?.size?: 0) > currCenterCount) {
+            var currCenter = centers?.get(currCenterCount)
+            val sessionsForCenter = centerIdToSessionsMap?.get(currCenter?.centerId)
+            val currSession = if(currSessionCountForCenter >= (sessionsForCenter?.size ?: 0)) {
+                currCenterCount += 1
+                currCenter = if(currCenterCount >= (centers?.size ?: 0)) null else centers?.get(currCenterCount)
+                currSessionCountForCenter = 0
+                centerIdToSessionsMap?.get(currCenter?.centerId)?.get(currSessionCountForCenter)
+            } else {
+                sessionsForCenter?.get(currSessionCountForCenter)
+            }
             viewModelScope.launch {
-                if(currCenter != null && currSessions.isNullOrEmpty().not()) {
-                    book(currCenter, currSessions!!)
+                if(currCenter != null && currSession != null) {
+                    _currCenter.postValue(currCenter)
+                    _currSession.postValue(currSession)
                 } else {
                     Timber.d("Finishing booking at 74")
                     _finishBooking.postValue(true)
@@ -83,14 +104,12 @@ class CowinBookingActivityViewModel @Inject constructor(
         }
     }
 
-    private suspend fun book(currCenter: Center, currSessions: List<Session>) {
-        _currCenter.postValue(currCenter)
-        _currSessions.postValue(currSessions)
+    private suspend fun fetchCaptcha() {
         _fetchingCaptcha.postValue(true)
         val captcha = getReCaptcha()
         _fetchingCaptcha.postValue(false)
         if(captcha != null) {
-            val cleanCaptcha = captcha.replace("(<path d=)(.*?)(fill=\"none\"/>)".toRegex(), "")
+            val cleanCaptcha = captcha.replace(captchaLineReplaceRegex, "")
             val base64Captcha = Base64.encodeToString(cleanCaptcha.toByteArray(), Base64.DEFAULT)
             _currCaptcha.postValue(getHTMLBody(base64Captcha))
         } else {
@@ -103,23 +122,27 @@ class CowinBookingActivityViewModel @Inject constructor(
         book()
     }
 
-    fun scheduleAppointment(captcha: String) {
+    fun bookNextSession() {
+        currSessionCountForCenter++
+        book()
+    }
+
+    fun scheduleAppointment(captcha: String, slot: String) {
         viewModelScope.launch {
             _scheduleAppointment.postValue(true)
             if(beneficiaries == null) {
-                beneficiaries = cowinAppRepository.getSavedBeneficiaryDetails()
+                beneficiaries = cowinAppRepository.getSavedBeneficiaryDetails().filter { it.isChecked == true }
             }
-            val session = if(_currSessions.value?.size ?: 0 > 0) _currSessions.value?.get(0) else null
-            val slot = if(session?.slots?.size ?: 0 > 0) session?.slots?.get(0) else null
-            val center = _currCenter.value
-            if(session != null && slot != null && center != null) {
+            val currSession = _currSession.value
+            val currCenter = _currCenter.value
+            if(currSession!= null && currCenter != null) {
                 val reqModel = ScheduleAppointmentRequest(
-                    beneficiaries = beneficiaries!!.filter { it.isChecked == true }.map { it.brId },
+                    beneficiaries = beneficiaries!!.map { it.brId },
                     dose = 1,
-                    sessionId = session.sessionId,
+                    sessionId = currSession.sessionId,
                     slot = slot,
                     captcha = captcha,
-                    centerId = center.centerId
+                    centerId = currCenter.centerId
                 )
                 when(val scheduleAppointmentResp = scheduleAppointmentUseCase.execute(reqModel)) {
                     is ApiResult.Success -> {
@@ -137,6 +160,7 @@ class CowinBookingActivityViewModel @Inject constructor(
                         if(scheduleAppointmentResp.code == 401) {
                             _finishBooking.postValue(true)
                         } else {
+                            fetchCaptcha()
                             _appointmentScheduleFailed.postValue(scheduleAppointmentResp.error.error)
                         }
                     }

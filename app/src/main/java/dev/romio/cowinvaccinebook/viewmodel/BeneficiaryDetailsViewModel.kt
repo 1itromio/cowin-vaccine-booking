@@ -62,7 +62,6 @@ class BeneficiaryDetailsViewModel @Inject constructor(
     override fun onViewCreate() {
         super.onViewCreate()
         observeOnOtpReceived()
-        //observeBeneficiarySummary()
         generateOtpIfRequired()
         fetchStates()
     }

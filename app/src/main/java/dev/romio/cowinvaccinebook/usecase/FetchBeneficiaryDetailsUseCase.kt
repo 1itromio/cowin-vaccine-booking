@@ -4,13 +4,18 @@ import dev.romio.cowinvaccinebook.data.model.ApiResult
 import dev.romio.cowinvaccinebook.data.model.BeneficiariesResponse
 import dev.romio.cowinvaccinebook.data.model.BeneficiarySummary
 import dev.romio.cowinvaccinebook.repository.CowinAppRepository
-import java.time.Year
+import java.net.HttpURLConnection
 import java.util.*
 import javax.inject.Inject
 // TODO("Check partially vaccinated case")
 class FetchBeneficiaryDetailsUseCase @Inject constructor(
     private val cowinAppRepository: CowinAppRepository
 ): BaseUseCase<Unit, ApiResult<BeneficiariesResponse>>() {
+
+    companion object {
+        private const val ERROR_CODE_BENEFICIARY_NOT_FOUND = "APPOIN0001"
+    }
+
     override suspend fun execute(input: Unit): ApiResult<BeneficiariesResponse> {
         val beneficiaryResp = cowinAppRepository.fetchBeneficiaryDetails()
         val savedBeneficiaryDetails = cowinAppRepository.getSavedBeneficiaryDetails()
@@ -33,6 +38,10 @@ class FetchBeneficiaryDetailsUseCase @Inject constructor(
             }.also {
                 cowinAppRepository.saveBeneficiaryDetails(it)
             }
+        } else if(beneficiaryResp is ApiResult.GenericError &&
+            beneficiaryResp.code == HttpURLConnection.HTTP_BAD_REQUEST &&
+            beneficiaryResp.error.errorCode == ERROR_CODE_BENEFICIARY_NOT_FOUND) {
+            cowinAppRepository.saveBeneficiaryDetails(arrayListOf())
         }
         return beneficiaryResp
     }
