@@ -3,7 +3,7 @@
 ## Warning
 * This is NOT the official CoWIN App and I DO NOT guarantee the scheduling of vaccine appointment through this App. This a hobby showcase project.
 * I am not responsible for any legalities involved while using this app. Use at your own risk
-* The will try to book the first available slot for a Vaccine Center
+* This App will try to book the first available slot for a Vaccine Center
 
 ## Usage Guide
 1. Make sure to provide Read SMS Permission.
