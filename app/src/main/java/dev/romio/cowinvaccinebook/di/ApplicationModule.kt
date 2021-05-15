@@ -20,6 +20,7 @@ import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.io.File
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -46,6 +47,9 @@ class ApplicationModule {
                              chuckerInterceptor: ChuckerInterceptor) = OkHttpClient().newBuilder()
         .addInterceptor(HeaderInterceptor(appPreference))
         .addInterceptor(chuckerInterceptor)
+        .connectTimeout(10, TimeUnit.SECONDS)
+        .writeTimeout(10, TimeUnit.SECONDS)
+        .readTimeout(30, TimeUnit.SECONDS)
         .addInterceptor { chain ->
             val request = chain.request()
             val response: Response = chain.proceed(request)

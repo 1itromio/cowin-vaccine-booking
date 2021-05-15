@@ -39,8 +39,10 @@ class CowinBookingActivityViewModel @Inject constructor(
         private set
     private var centerIdToSessionsMap: Map<Int, List<Session>>? = null
 
-    private var currCenterCount = 0
-    private var currSessionCountForCenter = 0
+    var currCenterCount = 0
+        private set
+    var currSessionCountForCenter = 0
+        private set
 
     private val _currCenter = MutableLiveData<Center>()
     private val _currSession = MutableLiveData<Session>()

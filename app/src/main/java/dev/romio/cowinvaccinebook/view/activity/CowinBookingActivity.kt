@@ -106,7 +106,7 @@ class CowinBookingActivity: BaseActivity<CowinBookingActivityViewModel>() {
             binding.center = it
             binding.tvTotalCenters.text =
                 getString(R.string.total_available_centers)
-                    .format((viewModel.centers?.size ?: 0).toString())
+                    .format("${viewModel.currCenterCount + 1}/${(viewModel.centers?.size ?: 0)}")
             binding.executePendingBindings()
         }
         viewModel.currSession.observe(this) {
@@ -186,6 +186,7 @@ class CowinBookingActivity: BaseActivity<CowinBookingActivityViewModel>() {
 
     private fun setCurrSessionData(session: Session) {
         binding.session = session
+        binding.tvCurrSession.text = "${viewModel.currSessionCountForCenter + 1}/${viewModel.currCenter.value?.sessions?.size}"
         binding.executePendingBindings()
         binding.rgSlots.removeAllViews()
         session.slots?.forEach {

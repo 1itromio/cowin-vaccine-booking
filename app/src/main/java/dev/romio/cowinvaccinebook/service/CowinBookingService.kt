@@ -3,10 +3,7 @@ package dev.romio.cowinvaccinebook.service
 import android.app.*
 import android.content.Context
 import android.content.Intent
-import android.os.Binder
-import android.os.Build
-import android.os.CountDownTimer
-import android.os.IBinder
+import android.os.*
 import androidx.core.app.NotificationCompat
 import dagger.hilt.android.AndroidEntryPoint
 import dev.romio.cowinvaccinebook.R
@@ -33,6 +30,7 @@ class CowinBookingService: Service() {
     companion object {
         const val CHANNEL_ID = "dev.romio.cowinvaccinebook.CowinBookingChannel"
         private const val NOTIFICATION_ID = 3455
+        private const val WAKE_LOCK_TAG = "dev.romio.cowinvaccinebook:WAKE_LOCK"
     }
 
     @Inject
@@ -66,6 +64,8 @@ class CowinBookingService: Service() {
 
     private val lookingForVaccine = AtomicBoolean(false)
 
+    private var wakeLock: PowerManager.WakeLock? = null
+
     //private var tryCount = 0
 
     private val notificationBuilder by lazy {
@@ -92,6 +92,10 @@ class CowinBookingService: Service() {
         getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     }
 
+    private val powerManager by lazy {
+        getSystemService(Context.POWER_SERVICE) as PowerManager
+    }
+
     var foundBookingCenters: List<Center>? = null
     var foundBookingSesionMap: Map<Int, List<Session>>? = null
 
@@ -107,6 +111,9 @@ class CowinBookingService: Service() {
         startNotification()
         observeOTP()
         start()
+        wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, WAKE_LOCK_TAG).apply {
+            acquire()
+        }
         cowinAppRepository.saveServiceRunning(true)
     }
 
@@ -327,6 +334,7 @@ class CowinBookingService: Service() {
     }
 
     private fun stopServiceGraceFully() {
+        wakeLock?.release()
         stopForeground(true)
         stopSelf()
     }

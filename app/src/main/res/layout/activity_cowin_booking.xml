@@ -101,6 +101,14 @@
                 app:layout_constraintTop_toBottomOf="@id/center_address"/>
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_curr_session"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small"
+                app:layout_constraintStart_toEndOf="@id/tv_session"
+                app:layout_constraintTop_toTopOf="@id/tv_session"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
