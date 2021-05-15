@@ -6,6 +6,7 @@
 * Add beneficiaries to the account from [here](https://www.cowin.gov.in) before using this app. Currently this app does not support adding beneficiaries.
 * You have to download the Appointment PDF from [here](https://www.cowin.gov.in) after an appointment is booked.
 * Currently this app supports booking the First Dose of vaccine only. Second dose support coming soon.
+* High power usage. So your battery might drain as long as you use this app
 
 ## Usage Guide
 1. Make sure to provide Read SMS Permission.
@@ -17,7 +18,7 @@
 
 ## Installation
 
-Download the APK from [here](https://github.com/1itromio/cowin-vaccine-booking/releases/download/v1.0.0/app-release.apk)
+Download the APK from [here](https://github.com/1itromio/cowin-vaccine-booking/releases/download/v1.0.1/app-release.apk)
 
 ## Screenshots
 
